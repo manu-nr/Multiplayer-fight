@@ -434,8 +434,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.018533679, y: -0.9780896, z: 0.09952403, w: 0.18191294}
-  m_LocalPosition: {x: 4.9131756, y: 1.8075899, z: -1.2899455}
+  m_LocalRotation: {x: 0.28230643, y: 0.008335934, z: -0.0024593475, w: 0.95928496}
+  m_LocalPosition: {x: 2.1081674, y: 5.632563, z: -11.993954}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1005,44 +1005,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7085597354555171049, guid: 8086443ad3c29e440b10e5bc94c301f5, type: 3}
+      propertyPath: _movementSpeed
+      value: 5.35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4190995861957753465, guid: 8086443ad3c29e440b10e5bc94c301f5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6774140388848640746}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8086443ad3c29e440b10e5bc94c301f5, type: 3}
---- !u!1 &6145518373368461405 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4190995861957753465, guid: 8086443ad3c29e440b10e5bc94c301f5, type: 3}
-  m_PrefabInstance: {fileID: 4619773767151496769}
-  m_PrefabAsset: {fileID: 0}
---- !u!143 &6774140388848640746
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6145518373368461405}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

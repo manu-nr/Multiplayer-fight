@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _movementSpeed = 10f;
     [SerializeField] private float _rotationSpeed = 0.05f;
     [SerializeField] private float _attackCooldownTime = 2.5f;
+    [SerializeField] private PlayerCombact _playerCombact;
 
 
     private CharacterController _characterController;
@@ -67,6 +68,8 @@ public class PlayerController : MonoBehaviour
 
     private void Attack()
     {
+        _isAttacking = true;
+        _playerCombact.Attack(_isAttacking);
         SetAttackAnimation();
         StartCoroutine(SetIsAttacking());
     }
@@ -90,7 +93,6 @@ public class PlayerController : MonoBehaviour
     #region Coroutines
     private IEnumerator SetIsAttacking()
     {
-        _isAttacking = true;
         yield return new WaitForSeconds(_attackCooldownTime);
         _isAttacking = false;
     }

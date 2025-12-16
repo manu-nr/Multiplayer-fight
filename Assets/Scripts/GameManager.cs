@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -53,6 +54,20 @@ public class GameManager : MonoBehaviour
     public void SetPlayer(GameObject player)
     {
         _myPlayer = player;
+    }
+
+    public void ReSpawnPlayer(GameObject player)
+    {
+        StartCoroutine(ReSpawnRoutine(player));
+    }
+
+    public IEnumerator ReSpawnRoutine(GameObject gameObject)
+    {
+        gameObject.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        gameObject.transform.rotation = Quaternion.identity;
+        gameObject.transform.position = Vector3.zero;
+        gameObject.SetActive(true);
     }
 
 }

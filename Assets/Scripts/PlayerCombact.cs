@@ -1,35 +1,85 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerCombact : MonoBehaviour
 {
     [SerializeField] private bool _isAttacking;
+    [SerializeField] private int _playerHealth = 100;
+    [SerializeField] private float _enemyRange = 2f;
+    [SerializeField] private PlayerUIController _playerUIController;
+    [SerializeField] private Transform _playerView;
+    [SerializeField] private PhotonView _photonView;
 
+    [SerializeField] private GameObject _enemyPlayer;
+
+    private PlayerController _playerController;
+
+    private void Start()
+    {
+        _photonView = GetComponent<PhotonView>();
+
+        if(_playerController == null)
+            _playerController = GetComponent<PlayerController>();
+    }
+
+    #region Private Methods
+    private IEnumerator AttackRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        if (CheckForEnemy())
+        {
+            _enemyPlayer.GetComponent<PlayerCombact>().GotAttackedByEnemy(true);
+        }
+
+    }
+
+    private bool CheckForEnemy()
+    {
+        Ray ray = new Ray(_playerView.position, _playerView.forward);
+
+        if(Physics.Raycast(ray, out RaycastHit hit, _enemyRange))
+        {
+            if(hit.collider.CompareTag("Player"))
+            {
+                _enemyPlayer = hit.collider.gameObject;
+                return true;
+            }
+        }
+        return false;
+    }
+    #endregion
+
+    #region Public Methods
     public void Attack(bool attack)
     {
         StartCoroutine(AttackRoutine());
     }
 
-
-    private IEnumerator AttackRoutine()
+    public void GotAttacked()
     {
-        yield return new WaitForSeconds(0.5f);
-        CheckForEnemy();
-    }
-
-
-    private bool CheckForEnemy()
-    {
-        Ray ray = new Ray(transform.position, transform.forward);
-        float range = 10f;
-        if(Physics.Raycast(ray, out RaycastHit hit, range))
+        _playerHealth -= 20;
+        _playerUIController.SetPlayerHealth(_playerHealth);
+        if(_playerHealth == 0)
         {
-            if(hit.collider.CompareTag("Player"))
+            if(_playerController != null)
             {
-                return true;
+                _playerController.RespawnPlayer();
             }
         }
-
-        return false;
     }
+
+    public void GotAttackedByEnemy(bool attacked)
+    {
+        _photonView.RPC("PlayerGotAttacked", RpcTarget.All, attacked);
+    }
+
+    [PunRPC]
+    public void PlayerGotAttacked(bool gotAttacked)
+    {
+        GotAttacked();
+    }
+
+    #endregion
 }

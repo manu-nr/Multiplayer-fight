@@ -1,39 +1,45 @@
 using Photon.Pun;
+using Photon.Realtime;
+using System;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private GameObject _player;
+    [SerializeField] private PlayerCombact _playerCombact;
+
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    //private void OnConnectedToServer()
-    //{
-    //    Debug.Log("Connected to server");
-    //    CreateOrJoinRoom();
-    //}
+    private void OnDestroy()
+    {
+    }
+
+
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to master");
-        CreateOrJoinRoom();
-    }
+        //Debug.Log("Connected to master");
+        //PhotonNetwork.JoinRandomOrCreateRoom(); // temperory
 
-    private void CreateOrJoinRoom()
+    }
+    public void CreateOrJoinRoom()
     {
-        Debug.Log("CreateOrJoinRoom");
-        PhotonNetwork.JoinRandomOrCreateRoom();
+        PhotonNetwork.JoinRandomOrCreateRoom(); // main
     }
 
     public override void OnCreatedRoom()
     {
-        Debug.Log("OnRoomCreated");
+        //Debug.Log("OnRoomCreated");
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("OnJoinedRoom");
+        object[] data = new object[] { GameManager.Instance.PlayerName};
+        _player = PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity, 0, data);
+        GameManager.Instance.SetPlayer(_player);
+        _playerCombact = _player.GetComponent<PlayerCombact>();
     }
-  
 }

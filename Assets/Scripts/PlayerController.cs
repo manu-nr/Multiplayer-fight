@@ -105,9 +105,9 @@ public class PlayerController : MonoBehaviourPun
     #region Public Methods
     public void RespawnPlayer()
     {
-        StartCoroutine(RespawnRoutine());
-
+        //GameManager.Instance.RespawnPlayer();
     }
+
     #endregion
 
     #region Coroutines
@@ -115,14 +115,6 @@ public class PlayerController : MonoBehaviourPun
     {
         yield return new WaitForSeconds(_attackCooldownTime);
         _isAttacking = false;
-    }
-    private IEnumerator RespawnRoutine()
-    {
-        gameObject.SetActive(false);
-        yield return new WaitForSeconds(2f);
-        gameObject.transform.rotation = Quaternion.identity;
-        gameObject.transform.position = Vector3.zero;
-        gameObject.SetActive(true);
     }
 
     #endregion

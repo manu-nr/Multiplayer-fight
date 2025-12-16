@@ -49,6 +49,12 @@ public class PlayerCombact : MonoBehaviour
         }
         return false;
     }
+
+    private void ResetPlayer()
+    {
+        _playerUIController.ResetPlayerUI();
+        _playerHealth = 100; 
+    }
     #endregion
 
     #region Public Methods
@@ -61,12 +67,11 @@ public class PlayerCombact : MonoBehaviour
     {
         _playerHealth -= 20;
         _playerUIController.SetPlayerHealth(_playerHealth);
-        if(_playerHealth == 0)
+
+        if (_playerHealth == 0)
         {
-            if(_playerController != null)
-            {
-                _playerController.RespawnPlayer();
-            }
+            ResetPlayer();
+            GameManager.Instance.ReSpawnPlayer(gameObject);
         }
     }
 

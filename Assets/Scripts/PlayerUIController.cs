@@ -28,4 +28,10 @@ public class PlayerUIController : MonoBehaviour
     {
         _playerHealth.fillAmount = currentHealth/100f;
     }
+
+    public void ResetPlayerUI()
+    {
+        SetPlayerName(GameManager.Instance.PlayerName);
+        SetPlayerHealth(100);
+    }
 }

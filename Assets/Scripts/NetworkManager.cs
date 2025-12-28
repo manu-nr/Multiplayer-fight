@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private GameObject _player;
-    [SerializeField] private PlayerCombact _playerCombact;
+    [SerializeField] private PlayerSpawner _playerSpawner;
+
+    private GameObject _player;
+    private PlayerCombact _playerCombact;
 
     void Start()
     {
@@ -38,7 +40,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         object[] data = new object[] { GameManager.Instance.PlayerName};
-        _player = PhotonNetwork.Instantiate("Player", transform.position, Quaternion.identity, 0, data);
+        _player = PhotonNetwork.Instantiate("Player", _playerSpawner.GetPlayerPosition(), Quaternion.identity, 0, data);
         GameManager.Instance.SetPlayer(_player);
         _playerCombact = _player.GetComponent<PlayerCombact>();
     }

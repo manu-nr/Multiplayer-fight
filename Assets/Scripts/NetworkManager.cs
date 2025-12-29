@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -30,7 +31,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         //Debug.Log("Connected to master");
-        PhotonNetwork.JoinRandomOrCreateRoom(); // temperory
+        //PhotonNetwork.JoinRandomOrCreateRoom(); // temperory
 
     }
     public void CreateOrJoinRoom()
@@ -46,8 +47,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         object[] data = new object[] { GameManager.Instance.PlayerName};
-        _player = PhotonNetwork.Instantiate("Player", _playerSpawner.GetPlayerPosition(), Quaternion.identity, 0, data);
+        _player = PhotonNetwork.Instantiate("Player", _playerSpawner.GetPlayerPosition(PhotonNetwork.CurrentRoom.PlayerCount), Quaternion.identity, 0, data);
         GameManager.Instance.SetPlayer(_player);
         _playerCombact = _player.GetComponent<PlayerCombact>();
     }
+
+    [PunRPC]
+    public void SetPlayerPosition(Vector3 position)
+    {
+        _player.transform.position = position;
+    }
+    
 }

@@ -1190,6 +1190,8 @@ MonoBehaviour:
   _enemyRange: 2
   _playerUIController: {fileID: 2288645351444140324}
   _playerView: {fileID: 6756379084220184740}
+  _photonView: {fileID: 0}
+  _enemyPlayer: {fileID: 0}
 --- !u!54 &8641987226775660753
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2562,6 +2564,7 @@ MonoBehaviour:
   _playerHealth: {fileID: 6476619419538570478}
   _testName: Manu
   _testHealth: 100
+  _playerUICanvas: {fileID: 5383998793491989314}
 --- !u!1 &8469088316907422274
 GameObject:
   m_ObjectHideFlags: 0

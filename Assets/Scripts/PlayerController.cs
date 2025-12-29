@@ -1,15 +1,19 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Animator))]
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPun
 {
 
     [SerializeField] private float _movementSpeed = 10f;
     [SerializeField] private float _rotationSpeed = 0.05f;
     [SerializeField] private float _attackCooldownTime = 2.5f;
+
+    [SerializeField] private PlayerCombact _playerCombact;
+    [SerializeField] private PlayerUIController _playerUIController;
 
 
     private CharacterController _characterController;
@@ -21,12 +25,21 @@ public class PlayerController : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
+
+        if(photonView.InstantiationData != null)
+        {
+            string playerName = (string) photonView.InstantiationData[0];
+            _playerUIController.SetPlayerName(playerName);
+        }
     }
 
     private void Update()
     {
-        HandlePlayerMovement();
-        HandlePlayerAttack();
+        if (photonView.IsMine)
+        {
+            HandlePlayerMovement();
+            HandlePlayerAttack();
+        }
     }
     #endregion
 
@@ -67,6 +80,8 @@ public class PlayerController : MonoBehaviour
 
     private void Attack()
     {
+        _isAttacking = true;
+        _playerCombact.Attack(_isAttacking);
         SetAttackAnimation();
         StartCoroutine(SetIsAttacking());
     }
@@ -87,12 +102,20 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Public Methods
+    public void RespawnPlayer()
+    {
+        //GameManager.Instance.RespawnPlayer();
+    }
+
+    #endregion
+
     #region Coroutines
     private IEnumerator SetIsAttacking()
     {
-        _isAttacking = true;
         yield return new WaitForSeconds(_attackCooldownTime);
         _isAttacking = false;
     }
+
     #endregion
 }

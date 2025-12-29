@@ -19,13 +19,19 @@ public class PlayerUIController : MonoBehaviour
         }
     }
 
-    private void SetPlayerName(string playerName)
+    public void SetPlayerName(string playerName)
     {
         _playerName.text = playerName;
     }
 
-    private void SetPlayerHealth(int currentHealth)
+    public void SetPlayerHealth(int currentHealth)
     {
         _playerHealth.fillAmount = currentHealth/100f;
+    }
+
+    public void ResetPlayerUI()
+    {
+        SetPlayerName(GameManager.Instance.PlayerName);
+        SetPlayerHealth(100);
     }
 }

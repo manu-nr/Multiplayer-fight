@@ -7,6 +7,23 @@ public class CameraController : MonoBehaviour
     private Camera _mainCamera;
     private Transform _myPlayerTransform;
 
+    public Camera MainCamera => _mainCamera;
+
+    public static CameraController Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this.gameObject);
+    }
+
+    private void Start()
+    {
+        _mainCamera = GetComponent<Camera>();
+    }
+
     private void LateUpdate()
     {
         if (_myPlayerTransform == null)

@@ -10,6 +10,16 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] private string _testName;
     [SerializeField] private int _testHealth;
 
+    [SerializeField] private Canvas _playerUICanvas;
+
+    private Camera _mainCamera;
+
+    private void Start()
+    {
+        if(_playerUICanvas != null)
+            _playerUICanvas = GetComponentInChildren<Canvas>();
+    }
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.K))
@@ -17,6 +27,19 @@ public class PlayerUIController : MonoBehaviour
             SetPlayerName(_testName);
             SetPlayerHealth(_testHealth);   
         }
+    }
+
+    private void LateUpdate()
+    {
+        if (_mainCamera == null && CameraController.Instance != null)
+            _mainCamera = CameraController.Instance.MainCamera;
+
+
+        if (_mainCamera != null)
+        {
+            _playerUICanvas.transform.LookAt(_mainCamera.transform);
+        }
+
     }
 
     public void SetPlayerName(string playerName)

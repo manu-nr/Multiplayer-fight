@@ -10,21 +10,27 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private GameObject _player;
     private PlayerCombact _playerCombact;
 
+    public GameObject MyPlayer => _player;
+
+    public static NetworkManager Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this.gameObject);
+    }
+
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    private void OnDestroy()
-    {
-    }
-
-
-
     public override void OnConnectedToMaster()
     {
         //Debug.Log("Connected to master");
-        //PhotonNetwork.JoinRandomOrCreateRoom(); // temperory
+        PhotonNetwork.JoinRandomOrCreateRoom(); // temperory
 
     }
     public void CreateOrJoinRoom()

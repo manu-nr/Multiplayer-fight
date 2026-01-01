@@ -15,7 +15,7 @@ MonoBehaviour:
   AppSettings:
     AppIdRealtime: 591fca6d-117d-4033-96d5-653557ed735f
     AppIdFusion: 
-    AppIdChat: 
+    AppIdChat: 52c005c8-911c-493a-a54a-1db7ff4036da
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
+  DevRegion: in
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -40,6 +40,7 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - PlayerGotAttacked
+  - SetPlayerPosition
   DisableAutoOpenWizard: 1
   ShowSettings: 1
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1

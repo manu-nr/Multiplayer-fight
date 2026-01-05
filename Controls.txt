@@ -1,0 +1,5 @@
+T - Attacking
+ADWS - Movement
+
+M - chat box open
+Esc - chat box close

@@ -1,4 +1,6 @@
 using Photon.Pun;
+using Photon.Realtime;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -20,6 +22,8 @@ public class PlayerController : MonoBehaviourPun
     private Animator _animator;
     private bool _isAttacking;
 
+    public static event Action PlayerSpawned;
+
     #region Unity Methods
     private void Start()
     {
@@ -29,8 +33,11 @@ public class PlayerController : MonoBehaviourPun
         if(photonView.InstantiationData != null)
         {
             string playerName = (string) photonView.InstantiationData[0];
+            PhotonNetwork.NickName = playerName;
             _playerUIController.SetPlayerName(playerName);
         }
+
+        PlayerSpawned?.Invoke();
     }
 
     private void Update()

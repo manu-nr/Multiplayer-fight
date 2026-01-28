@@ -25,6 +25,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        //PhotonNetwork.NickName
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -50,6 +51,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _player = PhotonNetwork.Instantiate("Player", _playerSpawner.GetPlayerPosition(PhotonNetwork.CurrentRoom.PlayerCount), Quaternion.identity, 0, data);
         GameManager.Instance.SetPlayer(_player);
         _playerCombact = _player.GetComponent<PlayerCombact>();
+
     }
 
     [PunRPC]

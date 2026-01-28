@@ -44,7 +44,12 @@ public class ChatUI : MonoBehaviour
     #region Public Methods
     public void DisplayMessage(string sender, object message)
     {
-        GameObject messageBox = Instantiate(_messagePrefab, _messageContent.transform);
+        GameObject messageBox = PooledObjects.Instance.GetChatMessage();
+        if(!messageBox.activeSelf)
+            messageBox.SetActive(true);
+
+        messageBox.transform.SetAsLastSibling();
+
         messageBox.GetComponent<TextMeshProUGUI>().text = $"{sender}: {message}";
     }
     #endregion
@@ -57,6 +62,7 @@ public class ChatUI : MonoBehaviour
         if(!string.IsNullOrEmpty(message))
         {
             ChatManager.Instance.SendMessages(message);
+            _messageTextField.text = "";
         }
     }
     #endregion

@@ -13,6 +13,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public GameObject MyPlayer => _player;
 
+    public static event Action OnPlayerJoined;
+
+
     public static NetworkManager Instance;
 
     private void Awake()
@@ -25,7 +28,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        //PhotonNetwork.NickName
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -45,8 +47,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         //Debug.Log("OnRoomCreated");
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log("[NRM] OnPlayerEnteredRoom: " + newPlayer.NickName);
+        base.OnPlayerEnteredRoom(newPlayer);
+        OnPlayerJoined?.Invoke();
+    }
+
+    
+
     public override void OnJoinedRoom()
     {
+        OnPlayerJoined?.Invoke();
         object[] data = new object[] { GameManager.Instance.PlayerName};
         _player = PhotonNetwork.Instantiate("Player", _playerSpawner.GetPlayerPosition(PhotonNetwork.CurrentRoom.PlayerCount), Quaternion.identity, 0, data);
         GameManager.Instance.SetPlayer(_player);
